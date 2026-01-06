@@ -89,22 +89,3 @@ Use **POST /chat** with:
 }
 ```
 
----
-
-## Notes
-
-* Do **not** rebuild the index at runtime
-* Backend only loads FAISS and runs retrieval + generation
-* Re-run `builtindex.py` only when PDFs are updated
-
----
-
-## Next Steps
-
-* Add UI (Streamlit / React)
-* Deploy on AWS (EC2 / ECS / Lambda)
-* Add conversation memory or streaming responses
-
----
-
-If you want, I can tailor this README for **GitHub**, **internal docs**, or **AWS deployment** specifically.
