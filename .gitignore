@@ -1,0 +1,35 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+myenv/
+.env
+.env.*
+
+# Jupyter notebooks checkpoints (if any)
+.ipynb_checkpoints/
+
+# Logs and database files
+*.log
+*.sqlite3
+
+# VS Code settings
+.vscode/
+
+
+# PDF files (your docs)
+docs/aws_s3/*.pdf
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Vectorstore (assuming it stores local embeddings)
+vectorstore/
+
+# RAG generated files (optional)
+rag/__pycache__/
