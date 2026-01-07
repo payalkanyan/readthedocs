@@ -14,7 +14,8 @@ huggingface-hub
 transformers
 sentence-transformers
 
-faiss-cpu
 
 pydantic
 python-dotenv
+
+chromadb

@@ -1,91 +1,52 @@
-Offline (build_index.py):
-    load PDFs → preprocess → create embeddings → save FAISS index
+# AWS S3 RAG
 
-Backend (server / chatbot):
-    load FAISS index from disk → answer user queries
-
-
-
-# AWS S3 RAG Chatbot
-
-This project implements a **Retrieval-Augmented Generation (RAG)** chatbot over AWS S3 documentation using **LangChain, FAISS, and Hugging Face models**.
-PDFs are processed **offline**, and the backend serves fast, retrieval-based answers via a REST API.
-
----
-
-## Architecture Overview
-
-* **Offline step**:
-  PDFs → text → chunks → embeddings → FAISS index (saved to disk)
-* **Runtime backend**:
-  Load FAISS once → retrieve relevant chunks → generate answer with LLM
-* **No PDF loading at query time**
-
----
 
 ## Setup
 
-### 1. Create virtual environment
+1. **Create `.env` file**
 
-```bash
-python -m venv myenv
-source myenv/bin/activate
+Create a `.env` file in the root directory with the following variables:
+
+```env
+HF_TOKEN = hf_token
 ```
 
-### 2. Install dependencies
+2. **Install Python dependencies (optional for local development)**
 
 ```bash
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Make sure you have a valid Hugging Face token set in `app/config.py` or as an environment variable.
-
 ---
 
-## Build the FAISS Index (One-time)
+## Running with Docker
 
-Run this **once** whenever documents change:
+The backend is fully containerized. You can run it with:
 
 ```bash
-python -m rag.builtindex
+sudo docker run -d \
+  -p 8000:8000 \
+  --env-file .env \
+  -v $(pwd)/vectorstore/chroma_db:/app/vectorstore/chroma_db \
+  aws-s3-rag
 ```
 
-This will:
+* `-p 8000:8000` exposes the backend on port 8000.
+* `--env-file .env` loads environment variables inside the container.
+* `-v $(pwd)/vectorstore/chroma_db:/app/vectorstore/chroma_db` mounts the local vector store into the container.
+* `-d` runs the container in detached mode.
 
-* Load PDFs from `docs/aws_s3/`
-* Split text into chunks
-* Generate embeddings
-* Save FAISS index to `vectorstore/faiss_index/`
-
----
-
-## Run the Backend
+**Verify the container is running:**
 
 ```bash
-uvicorn app.main:app --reload
+sudo docker ps
 ```
 
-Server will start at:
+**Check logs:**
 
-```
-http://127.0.0.1:8000
-```
-
----
-
-## Test the API
-
-Open Swagger UI:
-
-```
-http://127.0.0.1:8000/docs
-```
-
-Use **POST /chat** with:
-
-```json
-{
-  "question": "What is Amazon S3 Glacier?"
-}
+```bash
+sudo docker logs -f <container_id>
 ```
 
