@@ -28,8 +28,8 @@ docs/aws_s3/*.pdf
 .env.local
 .env.*.local
 
-# Vectorstore (assuming it stores local embeddings)
-vectorstore/
+# Vectorstore
+vectorstore/chroma_db/
 
 # RAG generated files (optional)
 rag/__pycache__/
