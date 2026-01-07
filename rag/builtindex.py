@@ -2,19 +2,24 @@ from rag.datasetloader import load as ds_loader
 from rag.preprocessing import preprocess_text
 from rag.embeddings import get_embeddings
 from langchain_core.documents import Document
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 
+
+PERSIST_DIR = "vectorstore/chroma_db"
 
 def build_index():
     all_text = ds_loader()
     chunks = preprocess_text(all_text)
-    docs = [Document(page_content=chunk) for chunk in chunks]
+    documents = [Document(page_content=chunk) for chunk in chunks]
 
     embeddings = get_embeddings()
-    db = FAISS.from_documents(docs, embeddings) 
-    db.save_local("vectorstore/faiss_index")
+    Chroma.from_documents(
+        documents = documents, 
+        embedding = embeddings,
+        persist_directory = PERSIST_DIR
+    ) 
 
-    print("FAISS index built")
+    print("Chroma DB built successfully")
 
 if __name__ == "__main__":
     build_index()

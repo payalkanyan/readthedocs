@@ -1,13 +1,13 @@
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
-from rag.retriever import retrieve
+from vectorstore.chroma_store import get_retriever
 from rag.prompt import get_prompt
 from app.config import HF_TOKEN
 
 
 prompt = get_prompt()
-retriever = retrieve()
+retriever = get_retriever()
 
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
