@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-BACKEND_URL = "http://host.docker.internal:8000/docs"  
+BACKEND_URL = "http://rag-backend:8000/"  
 
 st.set_page_config(page_title="AWS S3 RAG Frontend", layout="centered")
 
@@ -20,7 +20,7 @@ if st.button("Ask"):
         with st.spinner("Fetching answer from backend..."):
             try:
                 response = requests.post(
-                    f"{BACKEND_URL}/ask",
+                    f"{BACKEND_URL}/chat",
                     json={"question": question},
                     timeout=10
                 )
