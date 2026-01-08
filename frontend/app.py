@@ -1,7 +1,9 @@
 import streamlit as st
+import os
 import requests
 
-BACKEND_URL = "http://rag-backend:8000/"  
+BACKEND_URL = os.getenv("BACKEND_URL")
+
 
 st.set_page_config(page_title="AWS S3 RAG Frontend", layout="centered")
 
