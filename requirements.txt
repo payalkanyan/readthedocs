@@ -11,8 +11,7 @@ langchain_text_splitters
 langchain_google_genai
 
 huggingface-hub
-transformers
-sentence-transformers
+
 
 
 pydantic
