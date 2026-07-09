@@ -15,6 +15,27 @@ async def global_exception_handler(request: Request, exc: Exception):
 def read_root():
     return {"status": "ok", "message": "Backend is running!"}
 
+@app.get("/test_llm")
+def test_llm():
+    try:
+        from rag.rag_chain import get_llm
+        llm = get_llm()
+        ans = llm.invoke("say hi")
+        return {"status": "success", "response": ans}
+    except Exception as e:
+        return {"status": "error", "error": str(e), "trace": traceback.format_exc()}
+
+@app.get("/test_retriever")
+def test_retriever():
+    try:
+        from vectorstore.chroma_store import get_retriever
+        ret = get_retriever()
+        docs = ret.invoke("test")
+        return {"status": "success", "docs_count": len(docs)}
+    except Exception as e:
+        return {"status": "error", "error": str(e), "trace": traceback.format_exc()}
+
+
 class QueryRequest(BaseModel):
     question: str
 
