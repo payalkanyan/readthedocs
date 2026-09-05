@@ -3,4 +3,4 @@ __pycache__
 .env
 .git
 .gitignore
-vectorstore/chroma_db
+# vectorstore/chroma_db

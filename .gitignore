@@ -29,7 +29,7 @@ docs/aws_s3/*.pdf
 .env.*.local
 
 # Vectorstore
-vectorstore/chroma_db/
+# vectorstore/chroma_db/
 
 # RAG generated files (optional)
 rag/__pycache__/
