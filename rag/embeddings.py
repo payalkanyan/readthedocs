@@ -1,9 +1,9 @@
 import os
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_ollama import OllamaEmbeddings
+
+EMBEDDING_MODEL = "nomic-embed-text"
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+
 
 def get_embeddings():
-    embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=os.environ.get("HF_TOKEN"),
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
-    return embeddings
+    return OllamaEmbeddings(model=EMBEDDING_MODEL, base_url=OLLAMA_BASE_URL)

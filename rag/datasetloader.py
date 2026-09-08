@@ -9,7 +9,7 @@ DOCS_DIR = BASE_DIR / "docs" / "aws_s3"
 PDF_FILES = [
     "glacier-dg.pdf",
     "s3-api.pdf",
-    "s3-outposts.pdf",
+    "s3-devguide.pdf",
     "s3-userguide.pdf",
 ]
 
@@ -21,7 +21,8 @@ def load() -> str:
         pdf_path = DOCS_DIR / pdf_name
 
         if not pdf_path.exists():
-            raise FileNotFoundError(f"Missing PDF: {pdf_path}")
+            print(f"Warning: Missing PDF, skipping: {pdf_path}")
+            continue
 
         reader = PdfReader(str(pdf_path))
         text = ""

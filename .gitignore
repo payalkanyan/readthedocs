@@ -5,7 +5,7 @@ __pycache__/
 *.pyd
 
 # Virtual environment
-myenv/
+.venv/
 .env
 .env.*
 
@@ -19,9 +19,9 @@ myenv/
 # VS Code settings
 .vscode/
 
-
+.commandcode
 # PDF files (your docs)
-docs/aws_s3/*.pdf
+# docs/aws_s3/*.pdf
 
 # Environment files
 .env

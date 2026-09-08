@@ -3,6 +3,9 @@ from rag.preprocessing import preprocess_text
 from rag.embeddings import get_embeddings
 from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 PERSIST_DIR = "vectorstore/chroma_db"

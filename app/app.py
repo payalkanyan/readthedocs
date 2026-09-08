@@ -11,10 +11,6 @@ async def global_exception_handler(request: Request, exc: Exception):
     error_msg = traceback.format_exc()
     return JSONResponse(status_code=500, content={"detail": str(exc), "traceback": error_msg})
 
-@app.get("/")
-def read_root():
-    return {"status": "ok", "message": "Backend is running!"}
-
 @app.get("/test_llm")
 def test_llm():
     try:
