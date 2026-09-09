@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI RAG Assistant | Intelligent Document Q&A</title>
-    <meta name="description" content="A portfolio project showcasing Retrieval-Augmented Generation (RAG) with a modern chatbot interface. Ask questions and get AI-powered answers from your document knowledge base.">
+    <title>AWS S3 Assistant | Intelligent Storage Q&A</title>
+    <meta name="description" content="Ask questions about AWS S3 storage — get instant, AI-powered answers about buckets, policies, security, and best practices.">
 
     <!-- Open Graph for social sharing -->
-    <meta property="og:title" content="AI RAG Assistant | Portfolio Project">
-    <meta property="og:description" content="Intelligent document Q&A powered by RAG — FastAPI, ChromaDB, and Local LLM">
+    <meta property="og:title" content="AWS S3 Assistant | Portfolio Project">
+    <meta property="og:description" content="AI-powered assistant for AWS S3 — ask about buckets, policies, security, and more">
     <meta property="og:type" content="website">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Highlight.js for code syntax -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
@@ -25,6 +25,7 @@
 <body>
     <!-- Animated background -->
     <div class="bg-animation">
+        <div class="grid-overlay"></div>
         <div class="bg-orb bg-orb-1"></div>
         <div class="bg-orb bg-orb-2"></div>
         <div class="bg-orb bg-orb-3"></div>
@@ -38,12 +39,12 @@
                 <div class="logo">
                     <div class="logo-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
                         </svg>
                     </div>
-                    <span class="logo-text">RAG Assistant</span>
+                    <span class="logo-text">S3 Assistant</span>
                 </div>
             </div>
 
@@ -52,21 +53,21 @@
                 <div class="sidebar-section">
                     <h3 class="section-title">About</h3>
                     <p class="about-text">
-                        An intelligent document Q&A system powered by Retrieval-Augmented Generation.
-                        Ask questions and get precise answers from a knowledge base.
+                        Your intelligent AWS S3 companion. Ask anything about S3 buckets, storage classes,
+                        IAM policies, encryption, lifecycle rules, and best practices.
                     </p>
                 </div>
 
                 <!-- Tech stack -->
                 <div class="sidebar-section">
-                    <h3 class="section-title">Tech Stack</h3>
+                    <h3 class="section-title">Built With</h3>
                     <div class="tech-badges">
                         <span class="badge">FastAPI</span>
                         <span class="badge">ChromaDB</span>
                         <span class="badge">LangChain</span>
                         <span class="badge">Ollama</span>
                         <span class="badge">Docker</span>
-                        <span class="badge">Nginx</span>
+                        <span class="badge">AWS S3</span>
                     </div>
                 </div>
 
@@ -74,10 +75,11 @@
                 <div class="sidebar-section">
                     <h3 class="section-title">Try Asking</h3>
                     <div class="sample-questions">
-                        <button class="sample-chip" data-question="What is this project about?">What is this project about?</button>
-                        <button class="sample-chip" data-question="How does the RAG system work?">How does RAG work?</button>
-                        <button class="sample-chip" data-question="What technologies are used?">What technologies are used?</button>
-                        <button class="sample-chip" data-question="Explain the architecture">Explain the architecture</button>
+                        <button class="sample-chip" data-question="What are S3 storage classes and when should I use each?">What are S3 storage classes?</button>
+                        <button class="sample-chip" data-question="How do I set up bucket policies for public read access?">How to set bucket policies?</button>
+                        <button class="sample-chip" data-question="What's the difference between S3 ACLs and bucket policies?">ACLs vs bucket policies?</button>
+                        <button class="sample-chip" data-question="How do I enable versioning and configure lifecycle rules?">Versioning & lifecycle rules?</button>
+                        <button class="sample-chip" data-question="What are best practices for S3 security and encryption?">S3 security best practices?</button>
                     </div>
                 </div>
             </div>
@@ -111,8 +113,8 @@
                         <span class="status-dot"></span>
                         <span class="status-text">Online</span>
                     </div>
-                    <h1 class="header-title">AI RAG Assistant</h1>
-                    <p class="header-subtitle">Powered by Retrieval-Augmented Generation</p>
+                    <h1 class="header-title">AWS S3 Assistant</h1>
+                    <p class="header-subtitle">Ask me anything about Amazon S3 storage</p>
                 </div>
             </header>
 
@@ -122,27 +124,34 @@
                 <div class="welcome-message" id="welcomeMessage">
                     <div class="welcome-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2H10a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/>
-                            <path d="M9 21h6"/>
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
                         </svg>
                     </div>
-                    <h2 class="welcome-title">Welcome to the AI RAG Assistant</h2>
+                    <h2 class="welcome-title">AWS S3 Assistant</h2>
                     <p class="welcome-desc">
-                        I can answer questions based on the documents in the knowledge base.
-                        Ask me anything or try one of the sample questions in the sidebar.
+                        Got questions about S3 buckets, policies, security, or storage classes?
+                        Ask away — I've got the answers.
                     </p>
                     <div class="welcome-features">
                         <div class="feature-item">
-                            <span class="feature-icon">⚡</span>
-                            <span>Fast Responses</span>
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            </span>
+                            <span>Instant Answers</span>
                         </div>
                         <div class="feature-item">
-                            <span class="feature-icon">🎯</span>
-                            <span>Context-Accurate</span>
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </span>
+                            <span>Security Focused</span>
                         </div>
                         <div class="feature-item">
-                            <span class="feature-icon">🔒</span>
-                            <span>Local LLM</span>
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                            </span>
+                            <span>Best Practices</span>
                         </div>
                     </div>
                 </div>
@@ -156,12 +165,11 @@
                         <textarea
                             id="messageInput"
                             class="message-input"
-                            placeholder="Ask a question..."
+                            placeholder="Ask about S3..."
                             rows="1"
                             maxlength="1000"
                         ></textarea>
                         <div class="input-actions">
-                            <span class="char-counter" id="charCounter">0/1000</span>
                             <button class="btn-send" id="sendButton" aria-label="Send message">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <line x1="22" y1="2" x2="11" y2="13"/>
@@ -170,9 +178,13 @@
                             </button>
                         </div>
                     </div>
-                    <p class="input-hint">Press Enter to send, Shift+Enter for new line</p>
                 </div>
             </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Made by <a href="https://github.com/payalkanyan" target="_blank" rel="noopener noreferrer" class="footer-link">Payal Kanyan</a></p>
+            </footer>
         </main>
     </div>
 

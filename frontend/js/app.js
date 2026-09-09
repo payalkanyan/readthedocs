@@ -1,6 +1,6 @@
 /**
- * AI RAG Assistant - Chat Application
- * A modern chatbot interface for Retrieval-Augmented Generation
+ * AWS S3 Assistant - Chat Application
+ * An intelligent assistant for AWS S3 storage questions
  */
 
 (function() {
@@ -22,7 +22,6 @@
         messagesContainer: document.getElementById('messagesContainer'),
         messageInput: document.getElementById('messageInput'),
         sendButton: document.getElementById('sendButton'),
-        charCounter: document.getElementById('charCounter'),
         clearChat: document.getElementById('clearChat'),
         welcomeMessage: document.getElementById('welcomeMessage'),
         sidebar: document.getElementById('sidebar'),
@@ -103,15 +102,12 @@
     }
 
     function handleInputChange() {
-        const length = elements.messageInput.value.length;
-        elements.charCounter.textContent = `${length}/1000`;
-
         // Auto-resize
         elements.messageInput.style.height = 'auto';
-        elements.messageInput.style.height = Math.min(elements.messageInput.scrollHeight, 150) + 'px';
+        elements.messageInput.style.height = Math.min(elements.messageInput.scrollHeight, 120) + 'px';
 
         // Update send button state
-        elements.sendButton.disabled = length === 0 || state.isLoading;
+        elements.sendButton.disabled = elements.messageInput.value.trim().length === 0 || state.isLoading;
     }
 
     function handleSend() {
@@ -124,7 +120,6 @@
         // Clear input
         elements.messageInput.value = '';
         elements.messageInput.style.height = 'auto';
-        elements.charCounter.textContent = '0/1000';
         elements.sendButton.disabled = true;
 
         // Show typing indicator and send to API
@@ -280,7 +275,7 @@
     // ===================================
     function saveChatHistory() {
         try {
-            localStorage.setItem('rag_chat_history', JSON.stringify(state.messages));
+            localStorage.setItem('s3_chat_history', JSON.stringify(state.messages));
         } catch (e) {
             // Storage full or unavailable - silent fail
         }
@@ -288,7 +283,7 @@
 
     function loadChatHistory() {
         try {
-            const saved = localStorage.getItem('rag_chat_history');
+            const saved = localStorage.getItem('s3_chat_history');
             if (saved) {
                 const messages = JSON.parse(saved);
                 if (Array.isArray(messages) && messages.length > 0) {
@@ -311,7 +306,7 @@
         if (confirm('Clear all chat history?')) {
             state.messages = [];
             state.pendingQuestion = null;
-            localStorage.removeItem('rag_chat_history');
+            localStorage.removeItem('s3_chat_history');
 
             // Remove all messages from DOM
             const messages = elements.messagesContainer.querySelectorAll('.message, .typing-indicator');
