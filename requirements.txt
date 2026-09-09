@@ -9,7 +9,7 @@ langchain-huggingface
 langchain-core
 langchain_text_splitters
 langchain_google_genai
-
+langchain-ollama
 huggingface-hub
 
 
