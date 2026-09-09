@@ -1,17 +1,14 @@
-# Use official Python image
-FROM python:3.10-slim
+FROM nginx:alpine
 
-# Set working directory
-WORKDIR /app
+# Copy static frontend files
+COPY . /usr/share/nginx/html
 
-# Copy frontend files
-COPY . .
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install dependencies
-RUN pip install --no-cache-dir streamlit requests
+# Expose port 80
+EXPOSE 80
 
-# Expose Streamlit port
-EXPOSE 8501
-
-# Command to run Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI RAG Assistant | Intelligent Document Q&A</title>
+    <meta name="description" content="A portfolio project showcasing Retrieval-Augmented Generation (RAG) with a modern chatbot interface. Ask questions and get AI-powered answers from your document knowledge base.">
+
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="AI RAG Assistant | Portfolio Project">
+    <meta property="og:description" content="Intelligent document Q&A powered by RAG — FastAPI, ChromaDB, and Local LLM">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js for code syntax -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <!-- Main app container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">RAG Assistant</span>
+                </div>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- About section -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">About</h3>
+                    <p class="about-text">
+                        An intelligent document Q&A system powered by Retrieval-Augmented Generation.
+                        Ask questions and get precise answers from a knowledge base.
+                    </p>
+                </div>
+
+                <!-- Tech stack -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">Tech Stack</h3>
+                    <div class="tech-badges">
+                        <span class="badge">FastAPI</span>
+                        <span class="badge">ChromaDB</span>
+                        <span class="badge">LangChain</span>
+                        <span class="badge">Ollama</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">Nginx</span>
+                    </div>
+                </div>
+
+                <!-- Sample questions -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">Try Asking</h3>
+                    <div class="sample-questions">
+                        <button class="sample-chip" data-question="What is this project about?">What is this project about?</button>
+                        <button class="sample-chip" data-question="How does the RAG system work?">How does RAG work?</button>
+                        <button class="sample-chip" data-question="What technologies are used?">What technologies are used?</button>
+                        <button class="sample-chip" data-question="Explain the architecture">Explain the architecture</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar footer -->
+            <div class="sidebar-footer">
+                <button class="btn-clear" id="clearChat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                    </svg>
+                    Clear Chat
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main chat area -->
+        <main class="chat-area">
+            <!-- Mobile sidebar toggle -->
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+
+            <!-- Chat header -->
+            <header class="chat-header">
+                <div class="header-content">
+                    <div class="header-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Online</span>
+                    </div>
+                    <h1 class="header-title">AI RAG Assistant</h1>
+                    <p class="header-subtitle">Powered by Retrieval-Augmented Generation</p>
+                </div>
+            </header>
+
+            <!-- Messages container -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome message -->
+                <div class="welcome-message" id="welcomeMessage">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2H10a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/>
+                            <path d="M9 21h6"/>
+                        </svg>
+                    </div>
+                    <h2 class="welcome-title">Welcome to the AI RAG Assistant</h2>
+                    <p class="welcome-desc">
+                        I can answer questions based on the documents in the knowledge base.
+                        Ask me anything or try one of the sample questions in the sidebar.
+                    </p>
+                    <div class="welcome-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span>Fast Responses</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <span>Context-Accurate</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔒</span>
+                            <span>Local LLM</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Messages will be inserted here dynamically -->
+            </div>
+
+            <!-- Input area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <textarea
+                            id="messageInput"
+                            class="message-input"
+                            placeholder="Ask a question..."
+                            rows="1"
+                            maxlength="1000"
+                        ></textarea>
+                        <div class="input-actions">
+                            <span class="char-counter" id="charCounter">0/1000</span>
+                            <button class="btn-send" id="sendButton" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="input-hint">Press Enter to send, Shift+Enter for new line</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
